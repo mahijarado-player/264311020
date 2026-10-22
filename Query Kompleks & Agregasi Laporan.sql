@@ -1,8 +1,9 @@
 SELECT 
     l.nama_lahan,
-    l.komoditas,
-    COUNT(r.id_rekomendasi) AS total_rekomendasi_diterapkan
+    s.jenis_sensor,
+    AVG(p.nilai) AS rata_rata_nilai
 FROM lahan l
-JOIN rekomendasi r ON l.id_lahan = r.id_lahan
-WHERE r.status_rekomendasi = 'DITERAPKAN'
-GROUP BY l.id_lahan, l.nama_lahan, l.komoditas;
+JOIN sensor s ON l.id_lahan = s.id_lahan
+JOIN pembacaan_sensor p ON s.id_sensor = p.id_sensor
+WHERE s.status_sensor = 'AKTIF'
+GROUP BY l.id_lahan, l.nama_lahan, s.jenis_sensor;
